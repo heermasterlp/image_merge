@@ -1,6 +1,6 @@
 # need install some libraries
 # the main library --- Pillow
-# install method page : http://pillow-cn.readthedocs.org/zh_CN/latest/installation.html
+# install page of Pillow : http://pillow-cn.readthedocs.org/zh_CN/latest/installation.html
 import base64
 from PIL import Image
 import os
