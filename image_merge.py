@@ -4,31 +4,52 @@
 import base64
 from PIL import Image
 import os
+import urllib2
+import cStringIO
+
+photo_width = 176
+photo_height = 160
+
+barcode_width = 173
+barcode_height = 140
 
 
 # image merge function
-def image_merge(image_bg, image_photo, image_barcode):
+def image_merge(image_bg, photo_url, barcode_url):
 
 	if not os.path.exists(image_bg):
 		return None
-	if not os.path.exists(image_photo):
-		return None
-	if not os.path.exists(image_barcode):
-		return None
+	# if not os.path.exists(image_photo):
+	# 	return None
+	# if not os.path.exists(image_barcode):
+	# 	return None
 	# open the image file 
 	img_bg = Image.open(image_bg)
-	img_ph = Image.open(image_photo)
-	img_bc = Image.open(image_barcode)
+
+	img_ph = image_load(photo_url)
+
+	img_bc = image_load(barcode_url)
+
+	if not img_ph or not img_bc:
+		return None
+
+	bg_width, bg_height = img_bg.size
 
 	# merge the photo with bg
-	merge_photo(img_ph, img_bg, 100, 100, 100)
+	merge_photo(img_ph, img_bg, 263, 263, photo_width)
 
 	# merge barcode with bg
-	merge_barcode(img_bc, img_bg, 300, 300, 100)
+	merge_barcode(img_bc, img_bg, 290, 953, barcode_width)
 
-	img_bg.save('merge.jpg')
+	# img_bg.save('merge.jpg')
 
-	return image_bg
+	return img_bg
+
+# load file based on the url
+def image_load(url):
+	file = cStringIO.StringIO(urllib2.urlopen(url).read())
+	img = Image.open(file)
+	return img
 
 
 #merge photo
@@ -79,4 +100,5 @@ def merge_barcode(barcode, bg, x, y, scale):
 
 
 if __name__ == '__main__':
-	image_merge('bg.jpg', 'photo.jpeg', 'barcode.jpeg')
+	image_merge('bg.jpg', 'https://pbs.twimg.com/profile_images/473506797462896640/_M0JJ0v8.png', 'https://chart.googleapis.com/chart?chl=this+is+a+test+code&chs=200x200&cht=qr&chld=H%7C0')
+	print "successed!"
