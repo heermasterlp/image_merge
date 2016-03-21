@@ -7,10 +7,10 @@ import os
 import urllib2
 import cStringIO
 
-photo_width = 176
+photo_width = 97
 photo_height = 160
 
-barcode_width = 173
+barcode_width = 115
 barcode_height = 140
 
 
@@ -36,10 +36,10 @@ def image_merge(image_bg, photo_url, barcode_url):
 	bg_width, bg_height = img_bg.size
 
 	# merge the photo with bg
-	merge_photo(img_ph, img_bg, 263, 263, photo_width)
+	merge_photo(img_ph, img_bg, 133, 138, photo_width)
 
 	# merge barcode with bg
-	merge_barcode(img_bc, img_bg, 290, 953, barcode_width)
+	merge_barcode(img_bc, img_bg, 125, 592, barcode_width)
 
 	# img_bg.save('merge.jpg')
 
